@@ -6,18 +6,17 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerInputs controls;
 
-    PlayerInputs jump;
-
     float direction=0;
 
-    float vertical=0;
+    bool isGrounded;
+    public Transform groundCheck;
+    public LayerMask groundLayer;
 
     public Rigidbody2D playerRB;
     public float moveSpeed;
 
     public float jumpForce;
 
-    public bool canJump;
 
     private void Awake()
     {
@@ -29,13 +28,11 @@ public class PlayerMovement : MonoBehaviour
             direction = ctx.ReadValue<float>();
         };
 
-        jump = new PlayerInputs();
-        jump.Enable();
+        controls.Land.Jump.performed += ctx => Jump();
+        
 
-        jump.Land.Jump.performed += cty =>
-        {
-            vertical= cty.ReadValue<float>();
-        };
+        
+       
 
     
     }
@@ -48,35 +45,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
+        Debug.Log(isGrounded);
         playerRB.velocity = new Vector2(direction * moveSpeed *Time.deltaTime, playerRB.velocity.y);
 
       
 
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-             playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         
-        }
-        
-          
        
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Ground")
+    void Jump()
+    {   
+        if(isGrounded)
         {
-            canJump= true;
+            playerRB.velocity = new Vector2(playerRB.velocity.x, jumpForce);
         }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if(collision.gameObject.tag =="Ground")
-        {
-            canJump= false;
-        }
+        
     }
     
 }
