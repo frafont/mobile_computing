@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Land.Jump.performed += ctx => Jump();
         
-
+        controls.Land.Kick.performed +=ctx => Kick();
         
        
 
@@ -62,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
         {
             playerRB.velocity = new Vector2(playerRB.velocity.x, jumpForce);
         }
+        
+    }
+
+    void Kick()
+    {
         
     }
     
