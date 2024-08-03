@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
 
     public Rigidbody2D playerRB;
+    public Animator anim;
     public float moveSpeed;
 
     public float jumpForce;
@@ -45,10 +46,21 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
         Debug.Log(isGrounded);
+        if(direction>0) //mi sto muovendo verso destra
+        {
+            anim.SetFloat("speed", moveSpeed);
+        } else if(direction<0) {
+            anim.SetFloat("speed", -moveSpeed);
+        }
         playerRB.velocity = new Vector2(direction * moveSpeed *Time.deltaTime, playerRB.velocity.y);
 
+        if(direction==0)
+        {
+            anim.SetFloat("speed", 0);
+        }
       
 
 
@@ -67,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Kick()
     {
-        
+        anim.SetTrigger("kick");
     }
     
 }
