@@ -2123,9 +2123,10 @@ GameObject:
   - component: {fileID: 1510909892}
   - component: {fileID: 1510909891}
   - component: {fileID: 1510909890}
+  - component: {fileID: 1510909894}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2162,9 +2163,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008240342, y: -0.004120171}
   serializedVersion: 2
-  m_Radius: 0.4642857
+  m_Radius: 0.47664618
 --- !u!50 &1510909891
 Rigidbody2D:
   serializedVersion: 4
@@ -2259,6 +2260,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1510909894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510909889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa14e34270893f4bb9b213dda19da99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1591581427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2649,9 +2662,11 @@ GameObject:
   - component: {fileID: 1792123048}
   - component: {fileID: 1792123049}
   - component: {fileID: 1792123050}
+  - component: {fileID: 1792123051}
+  - component: {fileID: 1792123052}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2763,6 +2778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca24437c2f28c6847aab16e25879fce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canKick: 0
   groundCheck: {fileID: 599387798}
   groundLayer:
     serializedVersion: 2
@@ -2771,6 +2787,7 @@ MonoBehaviour:
   anim: {fileID: 1792123050}
   moveSpeed: 250
   jumpForce: 5
+  kickForce: 25
 --- !u!61 &1792123049
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2803,7 +2820,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015803576, y: -0.007901847}
+  m_Offset: {x: 0.05081868, y: -0.91831696}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2814,7 +2831,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9564204, y: 2.4147263}
+  m_Size: {x: 1.3728375, y: 0.5939963}
   m_EdgeRadius: 0
 --- !u!95 &1792123050
 Animator:
@@ -2837,6 +2854,76 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!58 &1792123051
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792123043}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.28012002}
+  serializedVersion: 2
+  m_Radius: 0.9596399
+--- !u!58 &1792123052
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792123043}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.95, y: -0.78}
+  serializedVersion: 2
+  m_Radius: 0.5436101
 --- !u!1 &1833840485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,6 +2936,7 @@ GameObject:
   - component: {fileID: 1833840489}
   - component: {fileID: 1833840488}
   - component: {fileID: 1833840487}
+  - component: {fileID: 1833840490}
   m_Layer: 5
   m_Name: Kick
   m_TagString: Untagged
@@ -2957,6 +3045,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833840485}
   m_CullTransparentMesh: 1
+--- !u!114 &1833840490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833840485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/shift
 --- !u!1 &2032905359
 GameObject:
   m_ObjectHideFlags: 0
