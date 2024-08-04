@@ -9,6 +9,11 @@ public class PlayerMovement : MonoBehaviour
     float direction=0;
 
     bool isGrounded;
+
+    public bool canKick;
+
+    private GameObject ball;
+
     public Transform groundCheck;
     public LayerMask groundLayer;
 
@@ -17,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
 
     public float jumpForce;
+
+    public float kickForce;
 
 
     private void Awake()
@@ -40,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       ball= GameObject.FindGameObjectWithTag("Ball"); 
     }
 
     // Update is called once per frame
@@ -48,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
     {
 
         isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
-        Debug.Log(isGrounded);
         if(direction>0) //mi sto muovendo verso destra
         {
             anim.SetFloat("speed", moveSpeed);
@@ -70,8 +76,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {   
+
+        anim.SetTrigger("jump");
         if(isGrounded)
         {
+            
             playerRB.velocity = new Vector2(playerRB.velocity.x, jumpForce);
         }
         
@@ -80,6 +89,12 @@ public class PlayerMovement : MonoBehaviour
     void Kick()
     {
         anim.SetTrigger("kick");
+
+        if(canKick)
+        {   
+            Vector2 pos= (transform.position - ball.transform.position).normalized;
+            ball.GetComponent<Rigidbody2D>().AddForce(-pos * kickForce, ForceMode2D.Impulse);
+        }
     }
     
 }
