@@ -67,11 +67,6 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetFloat("speed", 0);
         }
-      
-
-
-        
-       
     }
 
     void Jump()
