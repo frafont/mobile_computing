@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 334eaae1268984a45b9c18a2110b2ea1
+=======
 guid: a1989a7f7d04d4445bd1624ad2c7a32b
+>>>>>>> parent of c7560ab (Aggiunta loading bar)
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
