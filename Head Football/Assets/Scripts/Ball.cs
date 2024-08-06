@@ -6,11 +6,12 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
 
-    private GameObject player;
+    private GameObject player, enemy;
     // Start is called before the first frame update
     void Start()
     {
        player= GameObject.FindGameObjectWithTag("Player"); 
+       enemy= GameObject.FindGameObjectWithTag("Enemy");
     }
 
     // Update is called once per frame
@@ -25,6 +26,18 @@ public class Ball : MonoBehaviour
         {
             player.GetComponent<PlayerMovement>().canKick = true;
         }
+
+        if(collision.gameObject.tag =="Enemy")
+        {
+            enemy.GetComponent<AI>().canKick_AI = true;
+        }
+
+        if(collision.gameObject.tag =="canHeadAI")
+        {
+            enemy.GetComponent<AI>().canHead_AI = true;
+        }
+        
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -32,6 +45,14 @@ public class Ball : MonoBehaviour
         if(collision.gameObject.tag =="Player")
         {
             player.GetComponent<PlayerMovement>().canKick = false;
+        }
+        if(collision.gameObject.tag =="Enemy")
+        {
+            enemy.GetComponent<AI>().canKick_AI = false;
+        }
+        if(collision.gameObject.tag =="canHeadAI")
+        {
+            enemy.GetComponent<AI>().canHead_AI = false;
         }
     }
 }
