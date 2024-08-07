@@ -12,7 +12,7 @@ public class AI : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
 
-    private GameObject ball;
+    private GameObject ball, player;
     private Rigidbody2D rb_AI;
 
     public bool canKick_AI, canHead_AI;
@@ -24,19 +24,27 @@ public class AI : MonoBehaviour
     {
         ball= GameObject.FindGameObjectWithTag("Ball");
         rb_AI =GetComponent<Rigidbody2D>();
+
+        player= GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-        if(canKick_AI){
-            Kick();
+        if(GameController.instance.isScore == false && GameController.instance.EndMatch== false)
+        {
+            Move();
+            if(canKick_AI){
+                Kick();
+            }
+            isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
+            if(canHead_AI){
+                Jump();
+            }
         }
-        isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
-        if(canHead_AI){
-            Jump();
-        }
+        else {
+            anim.SetFloat("speed", 0);
+        }    
     }
     
 
@@ -44,23 +52,36 @@ public class AI : MonoBehaviour
     {
         if(Mathf.Abs(ball.transform.position.x - transform.position.x) < rangerDefence)
         {
-            if(ball.transform.position.x > transform.position.x)
+
+            if( Mathf.Abs(transform.position.x - ball.transform.position.x ) <= Mathf.Abs(ball.transform.position.x - player.transform.position.x))
+            {
+                 rb_AI.velocity= new Vector2(-Time.deltaTime *moveSpeed, rb_AI.velocity.y);
+                anim.SetFloat("speed", moveSpeed);   
+            }
+            else 
+            {
+                if(ball.transform.position.x > transform.position.x && ball.transform.position.y < -1f )
             {
                 rb_AI.velocity= new Vector2(Time.deltaTime *moveSpeed, rb_AI.velocity.y);
                 anim.SetFloat("speed", -moveSpeed);   
+            }
+            else if(ball.transform.position.y >= -1f && transform.position.x <= defence.position.x) {
+                rb_AI.velocity= new Vector2(0, rb_AI.velocity.y);
             }
             else {
                 anim.SetFloat("speed", moveSpeed);
                 rb_AI.velocity= new Vector2(-Time.deltaTime *moveSpeed, rb_AI.velocity.y);
                 
             }
+            }
+            
         }
         else
         {
-            if(transform.position.x > defence.position.x)
+            if(transform.position.x <  defence.position.x)
             {   
-                anim.SetFloat("speed",moveSpeed);
-                rb_AI.velocity= new Vector2(-Time.deltaTime *moveSpeed, rb_AI.velocity.y);
+                anim.SetFloat("speed",-moveSpeed);
+                rb_AI.velocity= new Vector2(Time.deltaTime *moveSpeed, rb_AI.velocity.y);
             }
             else {
                 rb_AI.velocity= new Vector2(0, rb_AI.velocity.y);
@@ -79,8 +100,9 @@ public class AI : MonoBehaviour
 
     public void Jump()
     {
-        anim.SetTrigger("jump");
+        
         if(isGrounded){
+            anim.SetTrigger("jump");
             rb_AI.velocity = new Vector2(rb_AI.velocity.x, jumpForce);
         }
         

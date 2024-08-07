@@ -53,20 +53,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameController.instance.isScore == false && GameController.instance.EndMatch== false){
+            isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
+            if(direction>0) //mi sto muovendo verso destra
+            {
+                anim.SetFloat("speed", moveSpeed);
+            } else if(direction<0) {
+                anim.SetFloat("speed", -moveSpeed);
+            }
+            playerRB.velocity = new Vector2(direction * moveSpeed *Time.deltaTime, playerRB.velocity.y);
 
-        isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
-        if(direction>0) //mi sto muovendo verso destra
-        {
-            anim.SetFloat("speed", moveSpeed);
-        } else if(direction<0) {
-            anim.SetFloat("speed", -moveSpeed);
+            if(direction==0)
+            {
+                anim.SetFloat("speed", 0);
+            }
         }
-        playerRB.velocity = new Vector2(direction * moveSpeed *Time.deltaTime, playerRB.velocity.y);
-
-        if(direction==0)
-        {
+        else {
             anim.SetFloat("speed", 0);
-        }
+        }    
     }
 
     void Jump()
