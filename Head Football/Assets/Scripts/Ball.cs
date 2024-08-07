@@ -44,19 +44,23 @@ public class Ball : MonoBehaviour
             Instantiate(goal, new Vector3(-5,1,0), Quaternion.identity);
             if(GameController.instance.isScore ==false && GameController.instance.EndMatch == false)
             {
+                Instantiate(goal, new Vector3(-5,1,0), Quaternion.identity);
                 GameController.instance.scorePlayer++;
                 GameController.instance.isScore= true;
+                GameController.instance.ContinueMatch(true);
             }
         }
 
         if(collision.gameObject.tag =="GoalPlayer")
         {
-            Instantiate(goal, new Vector3(-5,1,0), Quaternion.identity);
+           
 
             if(GameController.instance.isScore ==false && GameController.instance.EndMatch == false)
             {
+                Instantiate(goal, new Vector3(-5,1,0), Quaternion.identity);
                 GameController.instance.scoreEnemy++;
                 GameController.instance.isScore= true;
+                GameController.instance.ContinueMatch(false);
             }
         }
     }
