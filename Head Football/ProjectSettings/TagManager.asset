@@ -8,6 +8,8 @@ TagManager:
   - Ball
   - Enemy
   - canHeadAI
+  - GoalEnemy
+  - GoalPlayer
   layers:
   - Default
   - TransparentFX
