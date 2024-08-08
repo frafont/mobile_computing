@@ -53,9 +53,10 @@ public class AI : MonoBehaviour
         if(Mathf.Abs(ball.transform.position.x - transform.position.x) < rangerDefence)
         {
 
-            if( Mathf.Abs(transform.position.x - ball.transform.position.x ) <= Mathf.Abs(ball.transform.position.x - player.transform.position.x))
+            if( Mathf.Abs(transform.position.x - ball.transform.position.x ) <= Mathf.Abs(ball.transform.position.x - player.transform.position.x)
+            && ball.transform.position.y < -1f)
             {
-                 rb_AI.velocity= new Vector2(-Time.deltaTime *moveSpeed, rb_AI.velocity.y);
+                rb_AI.velocity= new Vector2(-Time.deltaTime *moveSpeed, rb_AI.velocity.y);
                 anim.SetFloat("speed", moveSpeed);   
             }
             else 
