@@ -10,6 +10,10 @@ TagManager:
   - canHeadAI
   - GoalEnemy
   - GoalPlayer
+  - ButtonStart
+  - PanelPause
+  - Audio
+  - AudioPanel
   layers:
   - Default
   - TransparentFX

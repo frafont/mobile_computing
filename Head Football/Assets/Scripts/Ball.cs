@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-
+    AudioManager audioManager;
     private GameObject player, enemy;
 
     public GameObject goal;
+    void Awake(){
+        audioManager= GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -40,12 +43,13 @@ public class Ball : MonoBehaviour
         }
         
         if(collision.gameObject.tag =="GoalEnemy")
-        {
-            Instantiate(goal, new Vector3(-5,1,0), Quaternion.identity);
+        {   
+            
             if(GameController.instance.isScore ==false && GameController.instance.EndMatch == false)
             {
                 Instantiate(goal, new Vector3(-5,1,0), Quaternion.identity);
-                GameController.instance.scorePlayer++;
+                audioManager.PlaySFX(audioManager.goal);
+                GameController.scorePlayer++;
                 GameController.instance.isScore= true;
                 GameController.instance.ContinueMatch(true);
                 
@@ -57,7 +61,8 @@ public class Ball : MonoBehaviour
         if(GameController.instance.isScore ==false && GameController.instance.EndMatch == false)
             {
                 Instantiate(goal, new Vector3(-5,1,0), Quaternion.identity);
-                GameController.instance.scoreEnemy++;
+                audioManager.PlaySFX(audioManager.goal);
+                GameController.scoreEnemy++;
                 GameController.instance.isScore= true;
                 GameController.instance.ContinueMatch(false);
                 
