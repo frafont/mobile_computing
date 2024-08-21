@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-<<<<<<< HEAD
 using TMPro;
 using UnityEngine.InputSystem.EnhancedTouch;
 using System;
 using UnityEngine.SceneManagement;
-=======
-using System;
->>>>>>> Mattia3
+
 
 public class GameController : MonoBehaviour
 {
@@ -23,15 +20,7 @@ public class GameController : MonoBehaviour
     public GameObject NameEnemy;
 
     public static GameController instance;
-<<<<<<< HEAD
     AudioManager audioManager;
-
-    public GameObject[] playerPrefabs;
-    
-    public GameObject[] EnemyPrefabs;
-    public GameObject[] NationsName;
-    public GameObject Nameplayer;
-    public GameObject NameEnemy;
 
     public Sprite[] Flags;
     public GameObject PlayerFlag;
@@ -63,18 +52,18 @@ public class GameController : MonoBehaviour
         
         Debug.Log("inizio caricamento palla e giocatori");
         ball = GameObject.FindGameObjectWithTag("Ball");
-        player = GameObject.FindGameObjectWithTag("Player");
-        enemy = GameObject.FindGameObjectWithTag("Enemy");
+        //player = GameObject.FindGameObjectWithTag("Player");
+        //enemy = GameObject.FindGameObjectWithTag("Enemy");
         audioManager= GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         if (selectedPlayerIndex != -1 && selectedEnemyIndex!=-1 ) 
         {
-            Instantiate(playerPrefabs[selectedPlayerIndex], new Vector3(0, 0, 0), Quaternion.identity);
+          player=Instantiate(playerPrefabs[selectedPlayerIndex], new Vector3(-5, -2, -1), Quaternion.identity);
 
             PlayerFlag.GetComponent<Image>().sprite =Flags[selectedPlayerIndex];
             Nameplayer.GetComponent<Text>().text=NationsName[selectedPlayerIndex].GetComponent<Text>().text;
 
-            Instantiate(EnemyPrefabs[selectedEnemyIndex], new Vector3(1.0f, 0, 0), Quaternion.identity);
+       enemy=Instantiate(EnemyPrefabs[selectedEnemyIndex], new Vector3(5, -2, -1), Quaternion.identity);
 
             EnemyFlag.GetComponent<Image>().sprite=Flags[selectedEnemyIndex];
             NameEnemy.GetComponent<Text>().text=NationsName[selectedEnemyIndex].GetComponent<Text>().text;
@@ -83,12 +72,13 @@ public class GameController : MonoBehaviour
 
         
         ball.GetComponent<Rigidbody2D>().isKinematic = true;
+
         player.GetComponent<Rigidbody2D>().isKinematic = true;
-        enemy.GetComponent<Rigidbody2D>().isKinematic = true;
+       // enemy.GetComponent<Rigidbody2D>().isKinematic = true;
 
         // Disabilita gli Animator inizialmente
         player.GetComponent<Animator>().enabled = false;
-        enemy.GetComponent<Animator>().enabled = false;
+         enemy.GetComponent<Animator>().enabled = false;
 
     }
 
@@ -123,13 +113,14 @@ public class GameController : MonoBehaviour
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             ball.GetComponent<Rigidbody2D>().isKinematic = true;
 
-            player.transform.position = new Vector3(-5, -2, -1);
+           player.transform.position = new Vector3(-5, -2, -1);
             player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             player.GetComponent<Rigidbody2D>().isKinematic = true;
 
             enemy.transform.position = new Vector3(5, -2, -1);
             enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             enemy.GetComponent<Rigidbody2D>().isKinematic = true;
+            
         } 
     }
     
@@ -145,8 +136,8 @@ public class GameController : MonoBehaviour
         player.GetComponent<Rigidbody2D>().isKinematic = false;
         enemy.GetComponent<Rigidbody2D>().isKinematic = false;
 
-        player.GetComponent<Animator>().enabled = true;
-        enemy.GetComponent<Animator>().enabled = true;
+        //player.GetComponent<Animator>().enabled = true;
+        //enemy.GetComponent<Animator>().enabled = true;
 
         if (isGameStarted)
         {
@@ -159,45 +150,11 @@ public class GameController : MonoBehaviour
         timeMatch = 90;
         StartCoroutine(BeginMatch());
     }
-=======
-    public Sprite[] Flags;
-    public GameObject PlayerFlag;
-    public GameObject EnemyFlag;
-
-    public Text txt_GoalPlayer, txt_GoalEnemy;
-     public static int selectedPlayerIndex = -1;
-     public static int selectedEnemyIndex=-1;
-
-
-    public  int scorePlayer, scoreEnemy;
-
-    public bool isScore, EndMatch;
+   
     
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-
-      if (selectedPlayerIndex != -1 && selectedEnemyIndex!=-1 ) 
-        {
-            Instantiate(playerPrefabs[selectedPlayerIndex], new Vector3(0, 0, 0), Quaternion.identity);
-
-            PlayerFlag.GetComponent<Image>().sprite =Flags[selectedPlayerIndex];
-            Nameplayer.GetComponent<Text>().text=NationsName[selectedPlayerIndex].GetComponent<Text>().text;
-
-            Instantiate(EnemyPrefabs[selectedEnemyIndex], new Vector3(1.0f, 0, 0), Quaternion.identity);
-
-            EnemyFlag.GetComponent<Image>().sprite=Flags[selectedEnemyIndex];
-            NameEnemy.GetComponent<Text>().text=NationsName[selectedEnemyIndex].GetComponent<Text>().text;
-            NameEnemy=NationsName[selectedEnemyIndex];
-        }
-            
-    }
+    
         
 
->>>>>>> Mattia3
 
     void Update()
     {

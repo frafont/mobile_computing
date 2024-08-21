@@ -10,6 +10,8 @@ public class SelectTeam : MonoBehaviour
     public Button[] nationButtons;  // Buttons for each team
     public GameObject[] Playertarget;
     public GameObject[] Enemytarget;
+    public GameObject playDis;
+    public GameObject play;
     // Start is called before the first frame update
     private int IndicePrec=-1;
     void Start()
@@ -21,7 +23,6 @@ public class SelectTeam : MonoBehaviour
             if(GameController.selectedPlayerIndex==-1){
                  int index = i;  // Local copy to avoid closure problem in lambda
             nationButtons[i].onClick.AddListener(() => HandleFlagClick(index));
-            
             }
             
         }
@@ -29,7 +30,9 @@ public class SelectTeam : MonoBehaviour
     }
     public enum SelectionMode{
          SelectingPlayer,
-         SelectingOpponent
+         SelectingOpponent,
+    
+
     }
 
     public SelectionMode currentSelectionMode = SelectionMode.SelectingPlayer;
@@ -37,14 +40,20 @@ public class SelectTeam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameController.selectedPlayerIndex!=-1 && GameController.selectedEnemyIndex!=-1 ){
+          playDis.SetActive(false);
+          play.SetActive(true);
+        }
         
     }
      public void SelectPlayer(int playerIndex)
     {
+
       
         if (playerIndex >= 0 && playerIndex < nationButtons.Length )
         {
                Playertarget[playerIndex].SetActive(true);
+               nationButtons[playerIndex].GetComponent<Button>().enabled=false;
        
             GameController.selectedPlayerIndex=playerIndex;
       
@@ -69,6 +78,7 @@ public class SelectTeam : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+
      public void ButtonPlay()
     {
         SceneManager.LoadScene("Game");
@@ -85,11 +95,14 @@ public class SelectTeam : MonoBehaviour
         case SelectionMode.SelectingOpponent:
         if(IndicePrec!=-1){
             Enemytarget[IndicePrec].SetActive(false);
+             nationButtons[IndicePrec].GetComponent<Button>().enabled=true;
         }
+
             SelectOpponent(index);
             // Gestisci il passaggio alla fase successiva del gioco o altro
 
             break;
+            
 
 }
 }
@@ -101,6 +114,7 @@ public void SelectOpponent(int index)
     if (index >= 0 && index < nationButtons.Length && index != GameController.selectedPlayerIndex)
     {
            Enemytarget[index].SetActive(true);
+         nationButtons[index].GetComponent<Button>().enabled=false;
            IndicePrec= index;
         GameController.selectedEnemyIndex = index;
 
