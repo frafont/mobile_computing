@@ -68,6 +68,7 @@ public class AI : MonoBehaviour
             if( Mathf.Abs(transform.position.x - ball.transform.position.x ) <= Mathf.Abs(ball.transform.position.x - player.transform.position.x)
             && ball.transform.position.y < -1f)
             {
+
                 rb_AI.velocity= new Vector2(-Time.deltaTime *moveSpeed, rb_AI.velocity.y);
                 anim.SetFloat("speed", moveSpeed);   
             }
@@ -75,6 +76,8 @@ public class AI : MonoBehaviour
             {
                 if(ball.transform.position.x > transform.position.x && ball.transform.position.y < -2f )
             {   
+               
+
                 rb_AI.velocity= new Vector2(Time.deltaTime *moveSpeed, rb_AI.velocity.y);
                 anim.SetFloat("speed", -moveSpeed);   
             }
@@ -91,8 +94,9 @@ public class AI : MonoBehaviour
         }
         else
         {
-            if(transform.position.x <  defence.position.x)
+            if(transform.position.x > defence.transform.position.x)
             {   
+                 
                 anim.SetFloat("speed",-moveSpeed);
                 rb_AI.velocity= new Vector2(Time.deltaTime *moveSpeed, rb_AI.velocity.y);
             }

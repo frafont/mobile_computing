@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "599775581414",
+    "firebase_url": "https://head-football-cd1d9-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "head-football-cd1d9",
+    "storage_bucket": "head-football-cd1d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599775581414:android:77e82af7ac30f150029727",
+        "android_client_info": {
+          "package_name": "com.iss.HeadFootball"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG6758KCvQGKOCtF6LkXUB2aTPBPv7cfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

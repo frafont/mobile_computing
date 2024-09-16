@@ -56,7 +56,7 @@ public class SelectTeam : MonoBehaviour
                nationButtons[playerIndex].GetComponent<Button>().enabled=false;
        
             GameController.selectedPlayerIndex=playerIndex;
-      
+            
            
 
             // Instantiate the selected player prefab at a specific location or set it active
