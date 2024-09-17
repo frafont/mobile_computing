@@ -9,7 +9,7 @@ using System;
 using UnityEngine.SceneManagement;
 
 
-public class GameController : MonoBehaviour
+ public class GameController : MonoBehaviour
 {
     //private GameObject Player,AI;
     public GameObject[] playerPrefabs;
@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public GameObject[] NationsName;
     public GameObject Nameplayer;
     public GameObject NameEnemy;
+  
 
     public static GameController instance;
     AudioManager audioManager;
@@ -25,9 +26,11 @@ public class GameController : MonoBehaviour
     public Sprite[] Flags;
     public GameObject PlayerFlag;
     public GameObject EnemyFlag;
-
+     public static Image PFlag,EFlag;
+     public static Text Nplayer,Nenemy;
     public static int selectedPlayerIndex = -1;
     public static int selectedEnemyIndex=-1;
+
 
 
     public Text txt_GoalPlayer, txt_GoalEnemy, txt_timeMatch;
@@ -37,7 +40,7 @@ public class GameController : MonoBehaviour
     public bool isScore, EndMatch;
 
     public bool isInPause= false;
-    private bool isGameStarted = false;
+    public bool isGameStarted = false;
 
     private GameObject ball, player, enemy;
 
@@ -50,34 +53,44 @@ public class GameController : MonoBehaviour
     {
         Inizializza();
         
-        Debug.Log("inizio caricamento palla e giocatori");
+       
         ball = GameObject.FindGameObjectWithTag("Ball");
-        //player = GameObject.FindGameObjectWithTag("Player");
-        //enemy = GameObject.FindGameObjectWithTag("Enemy");
+
         audioManager= GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         if (selectedPlayerIndex != -1 && selectedEnemyIndex!=-1 ) 
         {
+            Debug.Log("Qui ci arrivo");
           player=Instantiate(playerPrefabs[selectedPlayerIndex], new Vector3(-5, -2, -1), Quaternion.identity);
 
             PlayerFlag.GetComponent<Image>().sprite =Flags[selectedPlayerIndex];
             Nameplayer.GetComponent<Text>().text=NationsName[selectedPlayerIndex].GetComponent<Text>().text;
-
+        
+           
+        
+          
+          
        enemy=Instantiate(EnemyPrefabs[selectedEnemyIndex], new Vector3(5, -2, -1), Quaternion.identity);
+
+       enemy.GetComponent<AI>().enabled=false;
 
             EnemyFlag.GetComponent<Image>().sprite=Flags[selectedEnemyIndex];
             NameEnemy.GetComponent<Text>().text=NationsName[selectedEnemyIndex].GetComponent<Text>().text;
             NameEnemy=NationsName[selectedEnemyIndex];
+
+          
+              
+            
         }
+       
 
-        
+       
         ball.GetComponent<Rigidbody2D>().isKinematic = true;
-
         player.GetComponent<Rigidbody2D>().isKinematic = true;
-       // enemy.GetComponent<Rigidbody2D>().isKinematic = true;
-
+        enemy.GetComponent<Rigidbody2D>().isKinematic = true;
+    
         // Disabilita gli Animator inizialmente
-        player.GetComponent<Animator>().enabled = false;
+         player.GetComponent<Animator>().enabled = false;
          enemy.GetComponent<Animator>().enabled = false;
 
     }
@@ -89,12 +102,14 @@ public class GameController : MonoBehaviour
         }
     
     }
-
-    
-
     void Start()
     {   
-        ResetGame();
+
+   ResetGame();
+
+
+
+     
     }
 
     public void ResetGame()
@@ -106,16 +121,21 @@ public class GameController : MonoBehaviour
         EndMatch = false;
         isGameStarted = false;
         timeMatch = 90;
+    
+
+      
+
 
         if (ball != null && player != null && enemy != null)
         {
+           
             ball.transform.position = new Vector3(0, 0, 0);
             ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             ball.GetComponent<Rigidbody2D>().isKinematic = true;
 
            player.transform.position = new Vector3(-5, -2, -1);
             player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            player.GetComponent<Rigidbody2D>().isKinematic = true;
+           player.GetComponent<Rigidbody2D>().isKinematic = true;
 
             enemy.transform.position = new Vector3(5, -2, -1);
             enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -129,26 +149,38 @@ public class GameController : MonoBehaviour
 
     public void GameStart()
     {
+  
         GameObject.FindGameObjectWithTag("ButtonStart").SetActive(false);
-
+        Time.timeScale=1;
+       
+        if (player == null || enemy == null)
+       {
+        Debug.LogError("Il giocatore o il nemico non sono stati instanziati correttamente.");
+        return;
+        }
         isGameStarted = true;
         ball.GetComponent<Rigidbody2D>().isKinematic = false;
         player.GetComponent<Rigidbody2D>().isKinematic = false;
         enemy.GetComponent<Rigidbody2D>().isKinematic = false;
-
-        //player.GetComponent<Animator>().enabled = true;
-        //enemy.GetComponent<Animator>().enabled = true;
-
+        
+        player.GetComponent<Animator>().enabled = true;
+        enemy.GetComponent<Animator>().enabled = true;
+       
         if (isGameStarted)
         {
+             
+              enemy.GetComponent<AI>().enabled=true;
+
             GameStarted();
         }
     }
 
     public void GameStarted()
     {
+      
         timeMatch = 90;
         StartCoroutine(BeginMatch());
+         Debug.Log("QQQQQQQQQQQQQQQQQQQQQQQQQQ!!!!!!!!");
     }
    
     
@@ -158,6 +190,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+
         txt_GoalPlayer.text = scorePlayer.ToString();
         txt_GoalEnemy.text = scoreEnemy.ToString();
         txt_timeMatch.text = timeMatch.ToString();
@@ -165,6 +198,7 @@ public class GameController : MonoBehaviour
 
     IEnumerator BeginMatch()
     {
+        
         while (true)
         {
             yield return new WaitForSeconds(1f);
@@ -174,6 +208,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
+
                 StartCoroutine(waitEndMatch());
                 EndMatch = true;
                 break;
@@ -210,10 +245,12 @@ public class GameController : MonoBehaviour
 
     public void ButtonPause()
     {   
+
         isInPause=true;
         audioManager.GetAudioSource().Pause();
         panelPause.SetActive(true);
         Time.timeScale = 0;
+
     }
 
     public void ButtonResume()
@@ -228,6 +265,18 @@ public class GameController : MonoBehaviour
 
     public void ButtonLose()
     {
+          if (player != null)
+        {
+            Destroy(player);
+        }
+
+        if (enemy != null)
+        {
+            Destroy(enemy);
+        }
+        selectedPlayerIndex = -1;
+        selectedEnemyIndex = -1;
+
         scoreEnemy = 3;
         scorePlayer = 0;
         timeMatch = 0;
@@ -238,6 +287,18 @@ public class GameController : MonoBehaviour
 
     public void ButtonSelectTeam()
     {
+         if (player != null)
+        {
+            Destroy(player);
+        }
+
+        if (enemy != null)
+        {
+            Destroy(enemy);
+        }
+        selectedPlayerIndex = -1;
+        selectedEnemyIndex = -1;
+
         SceneManager.LoadScene("Select Team");
     }
 
@@ -253,7 +314,7 @@ public class GameController : MonoBehaviour
     IEnumerator waitEndMatch()
     {
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("End Game");
+       SceneManager.LoadScene("End Game");
     }
 
 }

@@ -9,7 +9,6 @@ public class Menu : MonoBehaviour
     public GameObject panelLoadding,panelTransit;
     public Image img_loading;
     public static bool isLoadding;
-    public Button target;
 
     
      
@@ -37,8 +36,6 @@ public class Menu : MonoBehaviour
             isLoadding=true;
 
         }
-        target.onClick.AddListener(() =>ButtonPlay());
-      
     }
     IEnumerator WaitLoaddingMenu(){
         yield return new WaitForSeconds(1.5f);
@@ -51,7 +48,7 @@ public class Menu : MonoBehaviour
     }
     public void ButtonPlay(){
 
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Select Team");
         
     }
     

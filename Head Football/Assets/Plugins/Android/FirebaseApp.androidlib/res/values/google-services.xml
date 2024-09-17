@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="firebase_database_url" translatable="false">https://head-football-cd1d9-default-rtdb.europe-west1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">599775581414</string>
+  <string name="google_storage_bucket" translatable="false">head-football-cd1d9.appspot.com</string>
+  <string name="project_id" translatable="false">head-football-cd1d9</string>
+  <string name="google_api_key" translatable="false">AIzaSyDG6758KCvQGKOCtF6LkXUB2aTPBPv7cfg</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDG6758KCvQGKOCtF6LkXUB2aTPBPv7cfg</string>
+  <string name="google_app_id" translatable="false">1:599775581414:android:77e82af7ac30f150029727</string>
+</resources>

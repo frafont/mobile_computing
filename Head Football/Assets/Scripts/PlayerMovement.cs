@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         if(GameController.instance!=null){
 
        
-        if(GameController.instance.isScore == false && GameController.instance.EndMatch== false){
+        if(GameController.instance.isScore == false && GameController.instance.EndMatch== false && GameController.instance.isGameStarted==true){
             isGrounded= Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
             if(direction>0) //mi sto muovendo verso destra
             {
